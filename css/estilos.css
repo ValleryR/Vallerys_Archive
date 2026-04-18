@@ -1,5 +1,5 @@
 body {
-  background-color: #F5F5F3;
+  background-color: #F2EFEA;
   font-family: 'Helvetica Neue', sans-serif;
   margin: 0;
 }
@@ -56,10 +56,10 @@ body {
 
 /* LINKS */
 .menu-left a {
-  margin-right: 25px;
+  margin-right: 30px;
   text-decoration: none;
   color: #1A1A1A;
-  font-size: 14px;
+  font-size: 16px;
   letter-spacing: 1px;
 }
 
