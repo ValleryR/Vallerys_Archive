@@ -18,7 +18,7 @@ body {
 /* LOGO GRANDE */
 .logo a {
   text-decoration: none;
-  color: #1A1A1A;
+  color: #4b0000;
   font-size: 42px;
   letter-spacing: 3px;
   font-weight: 700;
@@ -33,7 +33,7 @@ body {
 
 .nav-right a {
   margin-left: 15px;
-  text-decoration: none; /* 🔥 quita la rayita */
+  text-decoration: none; 
 }
 
 /* ICONOS */
