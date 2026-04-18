@@ -4,40 +4,47 @@ body {
   margin: 0;
 }
 
-/* Logo */
-.logo {
+/* Barra roja superior */
+.logo-bar {
+  background-color: #C1121F;
+  color: white;
   text-align: center;
-  font-size: 40px;
-  margin-top: 20px;
+  padding: 15px;
+}
+
+.logo-bar h1 {
+  margin: 0;
+  font-size: 32px;
+  letter-spacing: 2px;
 }
 
 /* Navbar */
 nav {
   display: flex;
   justify-content: center;
-  gap: 40px;
-  padding: 20px;
+  gap: 50px;
+  padding: 15px;
   background-color: white;
 }
 
 nav a {
   text-decoration: none;
-  color: #1A1A1A;
+  color: #C1121F;
   font-weight: 600;
+  font-size: 18px;
 }
 
 nav a:hover {
-  color: #C1121F;
+  opacity: 0.7;
 }
 
-/* Contenedor */
+/* Contenido */
 .contenedor {
   max-width: 1000px;
   margin: auto;
   text-align: center;
 }
 
-/* Títulos */
 h1 {
   margin-top: 50px;
 }
