@@ -1,0 +1,43 @@
+body {
+  background-color: #F5F5F3;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+}
+
+/* Logo */
+.logo {
+  text-align: center;
+  font-size: 40px;
+  margin-top: 20px;
+}
+
+/* Navbar */
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding: 20px;
+  background-color: white;
+}
+
+nav a {
+  text-decoration: none;
+  color: #1A1A1A;
+  font-weight: 600;
+}
+
+nav a:hover {
+  color: #C1121F;
+}
+
+/* Contenedor */
+.contenedor {
+  max-width: 1000px;
+  margin: auto;
+  text-align: center;
+}
+
+/* Títulos */
+h1 {
+  margin-top: 50px;
+}
