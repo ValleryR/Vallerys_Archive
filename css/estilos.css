@@ -1,38 +1,38 @@
 body {
   background-color: #F5F5F3;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   margin: 0;
 }
 
 /* HEADER */
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 25px 50px;
+  padding: 30px 50px 10px 50px;
 }
 
-/* IZQUIERDA */
-.nav-left a {
-  margin-right: 25px;
-  text-decoration: none;
-  color: #1A1A1A;
-  font-size: 14px;
-  letter-spacing: 1px;
+/* TOP BAR */
+.top-bar {
+  position: relative;
+  text-align: center;
 }
 
 /* LOGO */
 .logo a {
   text-decoration: none;
   color: #1A1A1A;
-  font-weight: bold;
-  letter-spacing: 3px;
-  font-size: 16px;
+  font-size: 28px;
+  letter-spacing: 2px;
+  font-weight: 400;
 }
 
-/* DERECHA */
+/* ICONOS DERECHA */
+.nav-right {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
 .nav-right a {
-  margin-left: 20px;
+  margin-left: 15px;
 }
 
 /* ICONOS */
@@ -45,24 +45,27 @@ body {
   stroke: #C1121F;
 }
 
+/* MENU */
+.menu {
+  margin-top: 25px;
+}
+
+.menu a {
+  margin-right: 25px;
+  text-decoration: none;
+  color: #1A1A1A;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.menu a:hover {
+  color: #C1121F;
+}
+
 /* CONTENIDO */
 .contenedor {
   max-width: 1200px;
   margin: auto;
   padding: 40px;
   text-align: center;
-}
-
-/* GRID HOME */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  margin-top: 40px;
-}
-
-.item {
-  background-color: white;
-  padding: 60px;
-  font-size: 14px;
 }
