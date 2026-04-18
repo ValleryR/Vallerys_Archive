@@ -15,13 +15,13 @@ body {
   text-align: center;
 }
 
-/* LOGO */
+/* LOGO GRANDE */
 .logo a {
   text-decoration: none;
   color: #1A1A1A;
-  font-size: 28px;
-  letter-spacing: 2px;
-  font-weight: 400;
+  font-size: 42px;
+  letter-spacing: 3px;
+  font-weight: 700;
 }
 
 /* ICONOS DERECHA */
@@ -33,6 +33,7 @@ body {
 
 .nav-right a {
   margin-left: 15px;
+  text-decoration: none; /* 🔥 quita la rayita */
 }
 
 /* ICONOS */
@@ -45,13 +46,15 @@ body {
   stroke: #C1121F;
 }
 
-/* MENU */
+/* MENU MÁS CENTRADO VISUALMENTE */
 .menu {
-  margin-top: 25px;
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
 }
 
 .menu a {
-  margin-right: 25px;
   text-decoration: none;
   color: #1A1A1A;
   font-size: 14px;
@@ -68,4 +71,11 @@ body {
   margin: auto;
   padding: 40px;
   text-align: center;
+}
+
+/* TITULOS */
+.contenedor h1 {
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: 2px;
 }
