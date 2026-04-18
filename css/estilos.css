@@ -6,7 +6,7 @@ body {
 
 /* HEADER */
 .header {
-  padding: 30px 50px 10px 50px;
+  padding: 30px 100px 10px 100px;
 }
 
 /* TOP BAR */
@@ -100,9 +100,9 @@ body {
 
 /* CONTENIDO */
 .contenedor {
-  max-width: 1200px;
+  max-width: 1100px;
   margin: auto;
-  padding: 40px;
+  padding: 60px 100px;
   text-align: center;
 }
 
