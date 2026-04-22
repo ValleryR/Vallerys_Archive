@@ -1,6 +1,14 @@
 version: '3.8'
-
 services:
+  web:
+    build: .
+    container_name: web_tienda
+    restart: always
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www/html
+
   db:
     image: mysql:8
     container_name: mysql_tienda

@@ -1,8 +1,33 @@
+<?php
+$conn = new mysqli("db", "root", "root", "tienda_moda");
+
+if ($conn->connect_error) {
+    die("Error de conexión");
+}
+
+$mensaje = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nombre = $_POST["nombre"];
+    $email = $_POST["email"];
+    $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+
+    $sql = "INSERT INTO usuarios (nombre, email, password, fecha_registro)
+            VALUES ('$nombre', '$email', '$password', NOW())";
+
+    if ($conn->query($sql) === TRUE) {
+        $mensaje = "Cuenta creada correctamente";
+    } else {
+        $mensaje = "Error: " . $conn->error;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Brands</title>
+    <title>Crear cuenta</title>
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
@@ -10,13 +35,13 @@
 <header class="header">
 
     <div class="top-bar">
-
         <div class="logo">
             <a href="index.html">Vallery's Archive</a>
         </div>
 
         <div class="nav-right">
             <a href="registro.php" class="icon">
+                <!-- icono user -->
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5">
                     <circle cx="12" cy="8" r="4"/>
                     <path d="M4 20c2-4 6-6 8-6s6 2 8 6"/>
@@ -24,6 +49,7 @@
             </a>
 
             <a href="carrito.html" class="icon">
+                <!-- carrito -->
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5">
                     <circle cx="9" cy="21" r="1"/>
                     <circle cx="20" cy="21" r="1"/>
@@ -31,7 +57,6 @@
                 </svg>
             </a>
         </div>
-
     </div>
 
     <nav class="menu">
@@ -45,10 +70,10 @@
         <div class="menu-right">
             <div class="search-box">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5">
-                    <circle cx="11" cy="11" r="7"/>
-                    <line x1="16.65" y1="16.65" x2="21" y2="21"/>
+                <circle cx="11" cy="11" r="7"/>
+                <line x1="16.65" y1="16.65" x2="21" y2="21"/>
                 </svg>
-                <input type="text" placeholder="Search">
+                 <input type="text" placeholder="Search">
             </div>
         </div>
     </nav>
@@ -56,8 +81,21 @@
 </header>
 
 <div class="contenedor">
-    <h1>BRANDS</h1>
-    <p>Explore our curated designers.</p>
+
+    <h1>CREATE ACCOUNT</h1>
+
+    <form method="POST" class="formulario">
+
+        <input type="text" name="nombre" placeholder="Nombre" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Contraseña" required>
+
+        <button type="submit">Create account</button>
+
+    </form>
+
+    <p><?php echo $mensaje; ?></p>
+
 </div>
 
 </body>

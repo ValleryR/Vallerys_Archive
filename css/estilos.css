@@ -112,3 +112,31 @@ body {
   font-weight: 700;
   letter-spacing: 2px;
 }
+
+.formulario {
+  max-width: 400px;
+  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.formulario input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  background: transparent;
+  font-size: 14px;
+}
+
+.formulario button {
+  padding: 12px;
+  background-color: #6c0000;
+  color: white;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+
+.formulario button:hover {
+  opacity: 0.9;
+}
