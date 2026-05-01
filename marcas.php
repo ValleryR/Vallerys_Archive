@@ -6,7 +6,7 @@ session_start();
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Bags</title>
+    <title>Brands</title>
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
@@ -57,7 +57,6 @@ session_start();
                     <circle cx="11" cy="11" r="7"/>
                     <line x1="16.65" y1="16.65" x2="21" y2="21"/>
                 </svg>
-
                 <input type="text" placeholder="Search">
             </div>
         </div>
@@ -66,7 +65,8 @@ session_start();
 </header>
 
 <div class="contenedor">
-    <h1>BAGS</h1>
+    <h1>BRANDS</h1>
+    <p>Explore our curated designers.</p>
 
     <?php if (isset($_SESSION["nombre"])) { ?>
         <p>Bienvenida, <?php echo $_SESSION["nombre"]; ?> 🤍</p>

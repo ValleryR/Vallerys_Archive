@@ -6,7 +6,7 @@ session_start();
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Bags</title>
+    <title>Shoes</title>
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
@@ -66,7 +66,7 @@ session_start();
 </header>
 
 <div class="contenedor">
-    <h1>BAGS</h1>
+    <h1>SHOES</h1>
 
     <?php if (isset($_SESSION["nombre"])) { ?>
         <p>Bienvenida, <?php echo $_SESSION["nombre"]; ?> 🤍</p>

@@ -140,3 +140,108 @@ body {
 .formulario button:hover {
   opacity: 0.9;
 }
+
+/* CONTENEDOR */
+.formulario {
+  max-width: 400px;
+  margin: 80px auto;
+  text-align: center;
+}
+
+/* FORM EN COLUMNA */
+.form-login {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* 🔥 espacio entre elementos */
+  margin-top: 40px;
+}
+
+/* INPUTS */
+.form-login input {
+  padding: 14px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+}
+
+/* BOTON */
+.form-login button {
+  padding: 14px;
+  background-color: #6c0000;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.form-login button:hover {
+  background-color: #4a0000;
+}
+
+/* TEXTO ABAJO */
+.registro-link {
+  margin-top: 40px;
+  font-size: 14px;
+}
+
+.registro-link a {
+  color: #6c0000;
+  text-decoration: none;
+}
+
+.registro-link a:hover {
+  text-decoration: underline;
+}
+
+/* ===== LOGIN FIX DEFINITIVO ===== */
+
+.formulario {
+  width: 100%;
+  max-width: 400px;
+  margin: 100px auto;
+  text-align: center;
+}
+
+/* FORZAR COLUMNA */
+.formulario form {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center;
+  gap: 25px;
+}
+
+/* INPUTS */
+.formulario input {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  font-size: 14px;
+  background: white;
+  box-sizing: border-box;
+}
+
+/* BOTON */
+.formulario button {
+  width: 100%;
+  padding: 15px;
+  background-color: #6c0000;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* TEXTO */
+.formulario p {
+  margin-top: 30px;
+}
+
+.registro-link {
+  text-align: center;
+}

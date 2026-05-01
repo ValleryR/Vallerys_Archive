@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 $conn = new mysqli("db", "root", "root", "tienda_moda");
 
 if ($conn->connect_error) {
@@ -8,31 +10,32 @@ if ($conn->connect_error) {
 $mensaje = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nombre = $_POST["nombre"];
-    $email = $_POST["email"];
-    $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
-    $verificar = "SELECT * FROM usuarios WHERE email = ?";
-    $stmt_verificar = $conn->prepare($verificar);
-    $stmt_verificar->bind_param("s", $email);
-    $stmt_verificar->execute();
-    $resultado = $stmt_verificar->get_result();
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+
+    $sql = "SELECT * FROM usuarios WHERE email = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+
+    $resultado = $stmt->get_result();
 
     if ($resultado->num_rows > 0) {
-        $mensaje = "Este correo ya está registrado";
-    } else {
-        $sql = "INSERT INTO usuarios (nombre, email, password, fecha_registro)
-                VALUES (?, ?, ?, NOW())";
+        $usuario = $resultado->fetch_assoc();
 
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sss", $nombre, $email, $password);
+        if (password_verify($password, $usuario["password"])) {
+            $_SESSION["id_usuario"] = $usuario["id_usuario"];
+            $_SESSION["nombre"] = $usuario["nombre"];
+            $_SESSION["email"] = $usuario["email"];
 
-        if ($stmt->execute()) {
-            header("Location: login.php");
+            header("Location: index.php");
             exit();
         } else {
-            $mensaje = "Error al crear la cuenta";
+            $mensaje = "Correo o contraseña incorrectos";
         }
+    } else {
+        $mensaje = "Correo o contraseña incorrectos";
     }
 }
 ?>
@@ -41,13 +44,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Crear cuenta</title>
+    <title>Login</title>
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
 
 <header class="header">
-
     <div class="top-bar">
         <div class="logo">
             <a href="index.php">Vallery's Archive</a>
@@ -89,23 +91,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </nav>
-
 </header>
 
-<div class="contenedor">
+<div class="formulario">
+    <h1>LOGIN</h1>
 
-    <h1>CREATE ACCOUNT</h1>
-
-    <form method="POST" class="formulario">
-        <input type="text" name="nombre" placeholder="Nombre" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="password" name="password" placeholder="Contraseña" required>
-
-        <button type="submit">Create account</button>
+    <form method="POST">
+        <input type="email" name="email" placeholder="EMAIL" required>
+        <input type="password" name="password" placeholder="PASSWORD" required>
+        <button type="submit">LOGIN</button>
     </form>
 
     <p><?php echo $mensaje; ?></p>
 
+    <p class="registro-link">
+        ¿No tienes cuenta? <a href="registro.php">Regístrate</a>
+    </p>
 </div>
 
 </body>

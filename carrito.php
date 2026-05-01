@@ -6,7 +6,7 @@ session_start();
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Bags</title>
+    <title>Carrito</title>
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
@@ -44,6 +44,7 @@ session_start();
     </div>
 
     <nav class="menu">
+
         <div class="menu-left">
             <a href="index.php">Home</a>
             <a href="marcas.php">Brands</a>
@@ -61,12 +62,14 @@ session_start();
                 <input type="text" placeholder="Search">
             </div>
         </div>
+
     </nav>
 
 </header>
 
 <div class="contenedor">
-    <h1>BAGS</h1>
+    <h1>CART</h1>
+    <p>Your selected items will appear here.</p>
 
     <?php if (isset($_SESSION["nombre"])) { ?>
         <p>Bienvenida, <?php echo $_SESSION["nombre"]; ?> 🤍</p>

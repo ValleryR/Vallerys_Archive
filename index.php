@@ -6,7 +6,7 @@ session_start();
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Bags</title>
+    <title>Vallery's Archive</title>
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
@@ -20,19 +20,14 @@ session_start();
         </div>
 
         <div class="nav-right">
+            <a href="login.php" class="icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5">
+                    <circle cx="12" cy="8" r="4"/>
+                    <path d="M4 20c2-4 6-6 8-6s6 2 8 6"/>
+                </svg>
+            </a>
 
-            <?php if (isset($_SESSION["nombre"])) { ?>
-                <a href="logout.php" class="icon">Logout</a>
-            <?php } else { ?>
-                <a href="login.php" class="icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5">
-                        <circle cx="12" cy="8" r="4"/>
-                        <path d="M4 20c2-4 6-6 8-6s6 2 8 6"/>
-                    </svg>
-                </a>
-            <?php } ?>
-
-            <a href="carrito.php" class="icon">
+            <a href="carrito.html" class="icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5">
                     <circle cx="9" cy="21" r="1"/>
                     <circle cx="20" cy="21" r="1"/>
@@ -44,11 +39,12 @@ session_start();
     </div>
 
     <nav class="menu">
+
         <div class="menu-left">
             <a href="index.php">Home</a>
-            <a href="marcas.php">Brands</a>
-            <a href="bags.php">Bags</a>
-            <a href="shoes.php">Shoes</a>
+            <a href="marcas.html">Brands</a>
+            <a href="bags.html">Bags</a>
+            <a href="shoes.html">Shoes</a>
         </div>
 
         <div class="menu-right">
@@ -61,15 +57,18 @@ session_start();
                 <input type="text" placeholder="Search">
             </div>
         </div>
+
     </nav>
 
 </header>
 
 <div class="contenedor">
-    <h1>BAGS</h1>
+    <h1>NEW ARRIVALS</h1>
+    <p>Curated pieces for your wardrobe</p>
 
     <?php if (isset($_SESSION["nombre"])) { ?>
         <p>Bienvenida, <?php echo $_SESSION["nombre"]; ?> 🤍</p>
+        <p><a href="logout.php">Cerrar sesión</a></p>
     <?php } ?>
 </div>
 
