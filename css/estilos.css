@@ -245,3 +245,102 @@ body {
 .registro-link {
   text-align: center;
 }
+
+/* MI CUENTA */
+
+.cuenta-contenedor {
+  max-width: 800px;
+}
+
+.cuenta-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 35px;
+  margin: 35px auto;
+  text-align: left;
+  border-radius: 14px;
+}
+
+.cuenta-card h2 {
+  color: #6c0000;
+  letter-spacing: 1px;
+  margin-bottom: 25px;
+}
+
+.cuenta-card p {
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.boton-logout {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 14px 28px;
+  background-color: #6c0000;
+  color: white;
+  text-decoration: none;
+  border-radius: 12px;
+  letter-spacing: 1px;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.boton-logout:hover {
+  background-color: #4a0000;
+}
+
+/* ===== MI CUENTA ===== */
+
+.cuenta-contenedor {
+  max-width: 900px;
+  margin: auto;
+  text-align: center;
+}
+
+.cuenta-contenedor h2 {
+  margin-top: 50px;
+  color: #6c0000;
+  letter-spacing: 1px;
+  font-size: 22px;
+}
+
+.tabla-cuenta {
+  width: 80%;
+  margin: 30px auto;
+  border-collapse: collapse;
+  background-color: #F2EFEA;
+  border: 2px solid #6c0000;
+}
+
+.tabla-cuenta th {
+  border: 1px solid #6c0000;
+  padding: 15px;
+  color: #6c0000;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.tabla-cuenta td {
+  border: 1px solid #6c0000;
+  padding: 15px;
+  text-align: center;
+  color: #1A1A1A;
+}
+
+.boton-cerrar-sesion {
+  display: inline-block;
+  margin: 25px auto 40px auto;
+  padding: 14px 35px;
+  background-color: #6c0000;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  text-decoration: none;
+  letter-spacing: 1px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.boton-cerrar-sesion:hover {
+  background-color: #4a0000;
+}

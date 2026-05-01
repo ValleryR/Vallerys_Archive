@@ -1,47 +1,38 @@
 <?php
 session_start();
 
+if (!isset($_SESSION["id_usuario"])) {
+    header("Location: login.php");
+    exit();
+}
+
 $conn = new mysqli("db", "root", "root", "tienda_moda");
 
 if ($conn->connect_error) {
     die("Error de conexión");
 }
 
-$mensaje = "";
+$id_usuario = $_SESSION["id_usuario"];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nombre = $_POST["nombre"];
-    $email = $_POST["email"];
-    $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+$sql = "SELECT nombre, email, fecha_registro FROM usuarios WHERE id_usuario = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $id_usuario);
+$stmt->execute();
+$resultado = $stmt->get_result();
+$usuario = $resultado->fetch_assoc();
 
-    $verificar = "SELECT * FROM usuarios WHERE email = ?";
-    $stmt_verificar = $conn->prepare($verificar);
-    $stmt_verificar->bind_param("s", $email);
-    $stmt_verificar->execute();
-    $resultado = $stmt_verificar->get_result();
+$fecha_registro = new DateTime($usuario["fecha_registro"]);
+$hoy = new DateTime();
+$diferencia = $fecha_registro->diff($hoy);
 
-    if ($resultado->num_rows > 0) {
-        $mensaje = "Este correo ya está registrado";
-    } else {
-        $sql = "INSERT INTO usuarios (nombre, email, password, fecha_registro)
-                VALUES (?, ?, ?, NOW())";
-
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sss", $nombre, $email, $password);
-
-        if ($stmt->execute()) {
-            $id_usuario = $conn->insert_id;
-
-            $_SESSION["id_usuario"] = $id_usuario;
-            $_SESSION["nombre"] = $nombre;
-            $_SESSION["email"] = $email;
-
-            header("Location: index.php");
-            exit();
-        } else {
-            $mensaje = "Error al crear la cuenta";
-        }
-    }
+if ($diferencia->y > 0) {
+    $tiempo_usuario = $diferencia->y . " año(s)";
+} elseif ($diferencia->m > 0) {
+    $tiempo_usuario = $diferencia->m . " mes(es)";
+} elseif ($diferencia->d > 0) {
+    $tiempo_usuario = $diferencia->d . " día(s)";
+} else {
+    $tiempo_usuario = "hoy";
 }
 ?>
 
@@ -49,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Crear cuenta</title>
+    <title>Mi cuenta</title>
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
@@ -57,12 +48,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <header class="header">
 
     <div class="top-bar">
+
         <div class="logo">
             <a href="index.php">Vallery's Archive</a>
         </div>
 
         <div class="nav-right">
-            <a href="login.php" class="icon">
+
+            <a href="cuenta.php" class="icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5">
                     <circle cx="12" cy="8" r="4"/>
                     <path d="M4 20c2-4 6-6 8-6s6 2 8 6"/>
@@ -76,10 +69,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <path d="M1 1h4l2.5 12h11l2-8H6"/>
                 </svg>
             </a>
+
         </div>
+
     </div>
 
     <nav class="menu">
+
         <div class="menu-left">
             <a href="index.php">Home</a>
             <a href="marcas.php">Brands</a>
@@ -93,26 +89,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <circle cx="11" cy="11" r="7"/>
                     <line x1="16.65" y1="16.65" x2="21" y2="21"/>
                 </svg>
+
                 <input type="text" placeholder="Search">
             </div>
         </div>
+
     </nav>
 
 </header>
 
-<div class="contenedor">
+<div class="contenedor cuenta-contenedor">
 
-    <h1>CREATE ACCOUNT</h1>
+    <h1>MY ACCOUNT</h1>
 
-    <form method="POST" class="formulario">
-        <input type="text" name="nombre" placeholder="Nombre" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="password" name="password" placeholder="Contraseña" required>
+    <h2>Account details</h2>
 
-        <button type="submit">Create account</button>
-    </form>
+    <table class="tabla-cuenta">
+        <tr>
+            <th>Nombre</th>
+            <td><?php echo $usuario["nombre"]; ?></td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td><?php echo $usuario["email"]; ?></td>
+        </tr>
+        <tr>
+            <th>Usuario desde</th>
+            <td><?php echo $tiempo_usuario; ?></td>
+        </tr>
+    </table>
 
-    <p><?php echo $mensaje; ?></p>
+    <a href="logout.php" class="boton-cerrar-sesion">Cerrar sesión</a>
+
+    <h2>Purchase history</h2>
+
+    <table class="tabla-cuenta">
+        <tr>
+            <th>Pedido</th>
+            <th>Fecha</th>
+            <th>Total</th>
+            <th>Estado</th>
+        </tr>
+        <tr>
+            <td colspan="4">Aquí aparecerá tu historial de compras cuando realices un pedido.</td>
+        </tr>
+    </table>
 
 </div>
 
