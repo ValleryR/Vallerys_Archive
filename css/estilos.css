@@ -152,7 +152,7 @@ body {
 .form-login {
   display: flex;
   flex-direction: column;
-  gap: 20px; /* 🔥 espacio entre elementos */
+  gap: 20px; /* espacio entre elementos */
   margin-top: 40px;
 }
 
@@ -246,99 +246,67 @@ body {
   text-align: center;
 }
 
-/* MI CUENTA */
+/* ===== MI CUENTA DEFINITIVO ===== */
 
 .cuenta-contenedor {
-  max-width: 800px;
-}
-
-.cuenta-card {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  padding: 35px;
-  margin: 35px auto;
-  text-align: left;
-  border-radius: 14px;
-}
-
-.cuenta-card h2 {
-  color: #6c0000;
-  letter-spacing: 1px;
-  margin-bottom: 25px;
-}
-
-.cuenta-card p {
-  font-size: 15px;
-  line-height: 1.8;
-}
-
-.boton-logout {
-  display: inline-block;
-  margin-top: 25px;
-  padding: 14px 28px;
-  background-color: #6c0000;
-  color: white;
-  text-decoration: none;
-  border-radius: 12px;
-  letter-spacing: 1px;
-  font-size: 14px;
-  transition: 0.3s;
-}
-
-.boton-logout:hover {
-  background-color: #4a0000;
-}
-
-/* ===== MI CUENTA ===== */
-
-.cuenta-contenedor {
-  max-width: 900px;
+  max-width: 1100px;
   margin: auto;
+  padding: 60px 100px;
   text-align: center;
 }
 
-.cuenta-contenedor h2 {
-  margin-top: 50px;
-  color: #6c0000;
-  letter-spacing: 1px;
-  font-size: 22px;
+.titulo-cuenta {
+  color: #6c0000 !important;
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 40px;
+  text-align: center;
 }
 
-.tabla-cuenta {
-  width: 80%;
+.cuenta-contenedor .tabla-cuenta,
+.cuenta-contenedor .tabla-historial {
+  width: 33.33%;
+  min-width: 360px;
   margin: 30px auto;
   border-collapse: collapse;
-  background-color: #F2EFEA;
   border: 2px solid #6c0000;
+  background-color: #F2EFEA;
 }
 
-.tabla-cuenta th {
+.cuenta-contenedor .tabla-cuenta th,
+.cuenta-contenedor .tabla-cuenta td,
+.cuenta-contenedor .tabla-historial th,
+.cuenta-contenedor .tabla-historial td {
   border: 1px solid #6c0000;
-  padding: 15px;
-  color: #6c0000;
-  text-align: center;
-  letter-spacing: 1px;
-}
-
-.tabla-cuenta td {
-  border: 1px solid #6c0000;
-  padding: 15px;
-  text-align: center;
+  padding: 14px;
+  text-align: left !important;
   color: #1A1A1A;
+  font-size: 15px;
+}
+
+.cuenta-contenedor .tabla-cuenta th,
+.cuenta-contenedor .tabla-historial th {
+  color: #6c0000;
+  font-weight: 700;
 }
 
 .boton-cerrar-sesion {
-  display: inline-block;
-  margin: 25px auto 40px auto;
-  padding: 14px 35px;
+  display: block;
+  width: 33.33%;
+  min-width: 360px;
+  margin: 25px auto 55px auto;
+  padding: 15px;
   background-color: #6c0000;
   color: white;
   border: none;
   border-radius: 12px;
-  text-decoration: none;
-  letter-spacing: 1px;
   font-size: 14px;
+  letter-spacing: 1px;
+  text-align: center;
+  text-decoration: none;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .boton-cerrar-sesion:hover {

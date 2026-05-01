@@ -60,6 +60,7 @@ session_start();
                     <circle cx="11" cy="11" r="7"/>
                     <line x1="16.65" y1="16.65" x2="21" y2="21"/>
                 </svg>
+
                 <input type="text" placeholder="Search">
             </div>
         </div>
@@ -73,7 +74,7 @@ session_start();
     <p>Curated pieces for your wardrobe</p>
 
     <?php if (isset($_SESSION["nombre"])) { ?>
-        <p>Hola, <?php echo $_SESSION["nombre"]; ?>, nos gusta verte de nuevo!</p>
+        <p>Hola <?php echo $_SESSION["nombre"]; ?>, nos gusta verte de nuevo!</p>
     <?php } ?>
 </div>
 

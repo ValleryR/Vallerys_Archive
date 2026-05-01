@@ -98,9 +98,9 @@ if ($diferencia->y > 0) {
 
 </header>
 
-<div class="contenedor cuenta-contenedor">
+<div class="cuenta-contenedor">
 
-    <h1>MY ACCOUNT</h1>
+    <h1 class="titulo-cuenta">MY ACCOUNT</h1>
 
     <h2>Account details</h2>
 
@@ -123,7 +123,7 @@ if ($diferencia->y > 0) {
 
     <h2>Purchase history</h2>
 
-    <table class="tabla-cuenta">
+    <table class="tabla-historial">
         <tr>
             <th>Pedido</th>
             <th>Fecha</th>
