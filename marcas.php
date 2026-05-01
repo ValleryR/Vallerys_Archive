@@ -1,10 +1,23 @@
-<?php session_start(); ?>
+<?php
+session_start();
+
+$conn = new mysqli("db", "root", "root", "tienda_moda");
+
+if ($conn->connect_error) {
+    die("Error de conexión");
+}
+
+// obtener marcas únicas
+$sql = "SELECT DISTINCT marca FROM productos ORDER BY marca ASC";
+$resultado = $conn->query($sql);
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Brands</title>
-<link rel="stylesheet" href="css/estilos.css">
+    <meta charset="UTF-8">
+    <title>Brands</title>
+    <link rel="stylesheet" href="css/estilos.css?v=17">
 </head>
 <body>
 
@@ -67,7 +80,20 @@
 </header>
 
 <div class="contenedor">
-<h1>BRANDS</h1>
+
+    <h1>BRANDS</h1>
+    <p>Explore our curated designers</p>
+
+    <div class="grid-marcas">
+
+        <?php while ($row = $resultado->fetch_assoc()) { ?>
+            <a href="marca.php?marca=<?php echo urlencode($row["marca"]); ?>" class="boton-marca">
+                <?php echo strtoupper($row["marca"]); ?>
+            </a>
+        <?php } ?>
+
+    </div>
+
 </div>
 
 </body>

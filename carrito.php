@@ -1,10 +1,41 @@
-<?php session_start(); ?>
+<?php
+session_start();
+
+$conn = new mysqli("db", "root", "root", "tienda_moda");
+
+if ($conn->connect_error) {
+    die("Error de conexión");
+}
+
+$carrito = $_SESSION["carrito"] ?? [];
+$productos_carrito = [];
+$total = 0;
+
+if (!empty($carrito)) {
+    $ids = implode(",", array_keys($carrito));
+    $sql = "SELECT * FROM productos WHERE id_producto IN ($ids)";
+    $resultado = $conn->query($sql);
+
+    while ($producto = $resultado->fetch_assoc()) {
+        $id = $producto["id_producto"];
+        $cantidad = $carrito[$id];
+        $subtotal = $producto["precio"] * $cantidad;
+
+        $producto["cantidad"] = $cantidad;
+        $producto["subtotal"] = $subtotal;
+
+        $productos_carrito[] = $producto;
+        $total += $subtotal;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <title>Carrito</title>
-<link rel="stylesheet" href="css/estilos.css">
+<link rel="stylesheet" href="css/estilos.css?v=15">
 </head>
 <body>
 
@@ -65,8 +96,69 @@
     </nav>
 
 </header>
-<div class="contenedor">
-<h1>CART</h1>
+
+<div class="contenedor carrito-contenedor">
+    <h1>CART</h1>
+
+    <?php if (empty($productos_carrito)) { ?>
+
+        <p>Your cart is empty.</p>
+
+    <?php } else { ?>
+
+        <table class="tabla-carrito">
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Subtotal</th>
+                <th>Action</th>
+            </tr>
+
+            <?php foreach ($productos_carrito as $producto) { ?>
+                <tr>
+                    <td>
+                        <div class="carrito-producto">
+                            <img src="img/productos/<?php echo $producto["imagen"]; ?>" alt="<?php echo $producto["nombre"]; ?>">
+                            <div>
+                                <strong><?php echo $producto["marca"]; ?></strong><br>
+                                <?php echo $producto["nombre"]; ?>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td>$<?php echo number_format($producto["precio"], 2); ?></td>
+
+                    <td>
+                        <form method="POST" action="actualizar_carrito.php" class="form-cantidad">
+                            <input type="hidden" name="id_producto" value="<?php echo $producto["id_producto"]; ?>">
+                            <input type="number" name="cantidad" value="<?php echo $producto["cantidad"]; ?>" min="1" max="<?php echo $producto["stock"]; ?>">
+                            <button type="submit">Update</button>
+                        </form>
+                    </td>
+
+                    <td>$<?php echo number_format($producto["subtotal"], 2); ?></td>
+
+                    <td>
+                        <form method="POST" action="eliminar_carrito.php">
+                            <input type="hidden" name="id_producto" value="<?php echo $producto["id_producto"]; ?>">
+                            <button type="submit" class="boton-eliminar">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            <?php } ?>
+
+        </table>
+
+        <div class="carrito-total">
+            <h2>Total: $<?php echo number_format($total, 2); ?></h2>
+
+            <form method="POST" action="finalizar_compra.php">
+                <button type="submit" class="boton-finalizar">Complete purchase</button>
+            </form>
+        </div>
+
+    <?php } ?>
 </div>
 
 </body>

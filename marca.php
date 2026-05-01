@@ -7,16 +7,21 @@ if ($conn->connect_error) {
     die("Error de conexión");
 }
 
-$sql = "SELECT * FROM productos WHERE id_categoria = 1 ORDER BY id_producto ASC";
-$resultado = $conn->query($sql);
+$marca = $_GET["marca"] ?? "";
+
+$stmt = $conn->prepare("SELECT * FROM productos WHERE marca = ?");
+$stmt->bind_param("s", $marca);
+$stmt->execute();
+
+$resultado = $stmt->get_result();
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Bags</title>
-    <link rel="stylesheet" href="css/estilos.css?v=14">
+    <title><?php echo $marca; ?></title>
+    <link rel="stylesheet" href="css/estilos.css?v=18">
 </head>
 <body>
 
@@ -80,32 +85,23 @@ $resultado = $conn->query($sql);
 
 <div class="contenedor catalogo-contenedor">
 
-    <h1>BAGS</h1>
+    <h1><?php echo strtoupper($marca); ?></h1>
 
     <div class="grid-productos">
 
         <?php while ($producto = $resultado->fetch_assoc()) { ?>
             <div class="producto-card">
 
-                <img 
-                    src="img/productos/<?php echo $producto["imagen"]; ?>" 
-                    alt="<?php echo $producto["nombre"]; ?>"
-                    class="producto-img"
-                >
+                <img src="img/productos/<?php echo $producto["imagen"]; ?>" class="producto-img">
 
                 <p class="producto-marca"><?php echo $producto["marca"]; ?></p>
                 <h2 class="producto-nombre"><?php echo $producto["nombre"]; ?></h2>
-                <p class="producto-descripcion"><?php echo $producto["descripcion"]; ?></p>
                 <p class="producto-precio">$<?php echo number_format($producto["precio"], 2); ?></p>
 
-                <?php if ($producto["stock"] > 0) { ?>
-                    <form method="POST" action="agregar_carrito.php">
-                        <input type="hidden" name="id_producto" value="<?php echo $producto["id_producto"]; ?>">
-                        <button type="submit" class="boton-producto">Add to cart</button>
-                    </form>
-                <?php } else { ?>
-                    <p class="sin-stock">Out of stock</p>
-                <?php } ?>
+                <form method="POST" action="agregar_carrito.php">
+                    <input type="hidden" name="id_producto" value="<?php echo $producto["id_producto"]; ?>">
+                    <button class="boton-producto">Add to cart</button>
+                </form>
 
             </div>
         <?php } ?>
