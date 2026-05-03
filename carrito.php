@@ -33,76 +33,27 @@ if (!empty($carrito)) {
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Carrito</title>
-<link rel="stylesheet" href="css/estilos.css?v=15">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito</title>
+    <link rel="stylesheet" href="css/estilos.css?v=30">
 </head>
 <body>
 
-<header class="header">
-
-    <div class="top-bar">
-
-        <div class="logo">
-            <a href="index.php">Vallery's Archive</a>
-        </div>
-
-        <div class="nav-right">
-
-            <?php if (isset($_SESSION["id_usuario"])) { ?>
-                <a href="cuenta.php" class="icon">
-            <?php } else { ?>
-                <a href="login.php" class="icon">
-            <?php } ?>
-
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5">
-                    <circle cx="12" cy="8" r="4"/>
-                    <path d="M4 20c2-4 6-6 8-6s6 2 8 6"/>
-                </svg>
-            </a>
-
-            <a href="carrito.php" class="icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5">
-                    <circle cx="9" cy="21" r="1"/>
-                    <circle cx="20" cy="21" r="1"/>
-                    <path d="M1 1h4l2.5 12h11l2-8H6"/>
-                </svg>
-            </a>
-
-        </div>
-
-    </div>
-
-    <nav class="menu">
-
-        <div class="menu-left">
-            <a href="index.php">Home</a>
-            <a href="marcas.php">Brands</a>
-            <a href="bags.php">Bags</a>
-            <a href="shoes.php">Shoes</a>
-        </div>
-
-        <div class="menu-right">
-            <div class="search-box">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5">
-                    <circle cx="11" cy="11" r="7"/>
-                    <line x1="16.65" y1="16.65" x2="21" y2="21"/>
-                </svg>
-
-                <input type="text" placeholder="Search">
-            </div>
-        </div>
-
-    </nav>
-
-</header>
+<?php include("header.php"); ?>
 
 <div class="contenedor carrito-contenedor">
     <h1>CART</h1>
 
     <?php if (empty($productos_carrito)) { ?>
 
-        <p>Your cart is empty.</p>
+    <div class="carrito-vacio">
+        <p>Tu carrito esta vacío, let's fix that!</p>
+
+        <a href="index.php" class="boton-seguir">
+            Continue shopping
+        </a>
+    </div>
 
     <?php } else { ?>
 
@@ -119,11 +70,22 @@ if (!empty($carrito)) {
                 <tr>
                     <td>
                         <div class="carrito-producto">
-                            <img src="img/productos/<?php echo $producto["imagen"]; ?>" alt="<?php echo $producto["nombre"]; ?>">
-                            <div>
-                                <strong><?php echo $producto["marca"]; ?></strong><br>
+
+                        <a href="producto.php?id=<?php echo $producto["id_producto"]; ?>">
+                            <img 
+                                src="img/productos/<?php echo $producto["imagen"]; ?>" 
+                                alt="<?php echo $producto["nombre"]; ?>"
+                            >
+                        </a>
+
+                        <div>
+                            <strong><?php echo $producto["marca"]; ?></strong><br>
+
+                            <a href="producto.php?id=<?php echo $producto["id_producto"]; ?>" class="link-producto-carrito">
                                 <?php echo $producto["nombre"]; ?>
-                            </div>
+                            </a>
+                        </div>
+
                         </div>
                     </td>
 
@@ -153,13 +115,31 @@ if (!empty($carrito)) {
         <div class="carrito-total">
             <h2>Total: $<?php echo number_format($total, 2); ?></h2>
 
-            <form method="POST" action="finalizar_compra.php">
+            <div class="acciones-carrito">
+                <form method="POST" action="finalizar_compra.php">
                 <button type="submit" class="boton-finalizar">Complete purchase</button>
             </form>
+
+            <form method="POST" action="vaciar_carrito.php">
+                <button type="submit" class="boton-vaciar">Vaciar carrito</button>
+            </form>
+            </div>
         </div>
 
     <?php } ?>
 </div>
+<?php include("footer.php"); ?>
+
+<script>
+function toggleMenu() {
+    document.getElementById("menuLinks").classList.toggle("activo");
+}
+</script>
+<script>
+function toggleMenu() {
+    document.getElementById("menuLinks").classList.toggle("activo");
+}
+</script>
 
 </body>
 </html>

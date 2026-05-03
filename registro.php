@@ -35,6 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["id_usuario"] = $id_usuario;
             $_SESSION["nombre"] = $nombre;
             $_SESSION["email"] = $email;
+            $_SESSION["rol"] = "cliente";
 
             header("Location: index.php");
             exit();
@@ -49,56 +50,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear cuenta</title>
-    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="css/estilos.css?v=40">
 </head>
 <body>
 
-<header class="header">
-
-    <div class="top-bar">
-        <div class="logo">
-            <a href="index.php">Vallery's Archive</a>
-        </div>
-
-        <div class="nav-right">
-            <a href="login.php" class="icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5">
-                    <circle cx="12" cy="8" r="4"/>
-                    <path d="M4 20c2-4 6-6 8-6s6 2 8 6"/>
-                </svg>
-            </a>
-
-            <a href="carrito.php" class="icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5">
-                    <circle cx="9" cy="21" r="1"/>
-                    <circle cx="20" cy="21" r="1"/>
-                    <path d="M1 1h4l2.5 12h11l2-8H6"/>
-                </svg>
-            </a>
-        </div>
-    </div>
-
-    <nav class="menu">
-        <div class="menu-left">
-            <a href="index.php">Home</a>
-            <a href="marcas.php">Brands</a>
-            <a href="bags.php">Bags</a>
-            <a href="shoes.php">Shoes</a>
-        </div>
-
-        <div class="menu-right">
-            <div class="search-box">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5">
-                    <circle cx="11" cy="11" r="7"/>
-                    <line x1="16.65" y1="16.65" x2="21" y2="21"/>
-                </svg>
-                <input type="text" placeholder="Search">
-            </div>
-        </div>
-    </nav>
-
-</header>
+<?php include("header.php"); ?>
 
 <div class="contenedor">
 
@@ -115,6 +73,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <p><?php echo $mensaje; ?></p>
 
 </div>
+
+<?php include("footer.php"); ?>
+
+<script>
+function toggleMenu() {
+    document.getElementById("menuLinks").classList.toggle("activo");
+}
+</script>
 
 </body>
 </html>

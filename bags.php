@@ -7,7 +7,21 @@ if ($conn->connect_error) {
     die("Error de conexión");
 }
 
-$sql = "SELECT * FROM productos WHERE id_categoria = 1 ORDER BY id_producto ASC";
+$orden = $_GET["orden"] ?? "";
+
+$order_sql = "ORDER BY id_producto ASC";
+
+if ($orden == "precio_asc") {
+    $order_sql = "ORDER BY precio ASC";
+} elseif ($orden == "precio_desc") {
+    $order_sql = "ORDER BY precio DESC";
+} elseif ($orden == "marca_asc") {
+    $order_sql = "ORDER BY marca ASC";
+} elseif ($orden == "marca_desc") {
+    $order_sql = "ORDER BY marca DESC";
+}
+
+$sql = "SELECT * FROM productos WHERE id_categoria = 1 $order_sql";
 $resultado = $conn->query($sql);
 ?>
 
@@ -15,83 +29,38 @@ $resultado = $conn->query($sql);
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bags</title>
-    <link rel="stylesheet" href="css/estilos.css?v=14">
+    <link rel="stylesheet" href="css/estilos.css?v=30">
 </head>
 <body>
 
-<header class="header">
-
-    <div class="top-bar">
-
-        <div class="logo">
-            <a href="index.php">Vallery's Archive</a>
-        </div>
-
-        <div class="nav-right">
-
-            <?php if (isset($_SESSION["id_usuario"])) { ?>
-                <a href="cuenta.php" class="icon">
-            <?php } else { ?>
-                <a href="login.php" class="icon">
-            <?php } ?>
-
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5">
-                    <circle cx="12" cy="8" r="4"/>
-                    <path d="M4 20c2-4 6-6 8-6s6 2 8 6"/>
-                </svg>
-            </a>
-
-            <a href="carrito.php" class="icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5">
-                    <circle cx="9" cy="21" r="1"/>
-                    <circle cx="20" cy="21" r="1"/>
-                    <path d="M1 1h4l2.5 12h11l2-8H6"/>
-                </svg>
-            </a>
-
-        </div>
-
-    </div>
-
-    <nav class="menu">
-
-        <div class="menu-left">
-            <a href="index.php">Home</a>
-            <a href="marcas.php">Brands</a>
-            <a href="bags.php">Bags</a>
-            <a href="shoes.php">Shoes</a>
-        </div>
-
-        <div class="menu-right">
-            <div class="search-box">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5">
-                    <circle cx="11" cy="11" r="7"/>
-                    <line x1="16.65" y1="16.65" x2="21" y2="21"/>
-                </svg>
-
-                <input type="text" placeholder="Search">
-            </div>
-        </div>
-
-    </nav>
-
-</header>
+<?php include("header.php"); ?>
 
 <div class="contenedor catalogo-contenedor">
 
     <h1>BAGS</h1>
+
+    <div class="filtros">
+        <a href="bags.php" class="filtro">All</a>
+        <a href="bags.php?orden=precio_asc" class="filtro">Price ↑</a>
+        <a href="bags.php?orden=precio_desc" class="filtro">Price ↓</a>
+        <a href="bags.php?orden=marca_asc" class="filtro">A → Z</a>
+        <a href="bags.php?orden=marca_desc" class="filtro">Z → A</a>
+    </div>
 
     <div class="grid-productos">
 
         <?php while ($producto = $resultado->fetch_assoc()) { ?>
             <div class="producto-card">
 
-                <img 
-                    src="img/productos/<?php echo $producto["imagen"]; ?>" 
-                    alt="<?php echo $producto["nombre"]; ?>"
-                    class="producto-img"
-                >
+                <a href="producto.php?id=<?php echo $producto["id_producto"]; ?>">
+                    <img 
+                        src="img/productos/<?php echo $producto["imagen"]; ?>" 
+                        alt="<?php echo $producto["nombre"]; ?>"
+                        class="producto-img"
+                    >
+                </a>
 
                 <p class="producto-marca"><?php echo $producto["marca"]; ?></p>
                 <h2 class="producto-nombre"><?php echo $producto["nombre"]; ?></h2>
@@ -113,6 +82,18 @@ $resultado = $conn->query($sql);
     </div>
 
 </div>
+<?php include("footer.php"); ?>
+
+<script>
+function toggleMenu() {
+    document.getElementById("menuLinks").classList.toggle("activo");
+}
+</script>
+<script>
+function toggleMenu() {
+    document.getElementById("menuLinks").classList.toggle("activo");
+}
+</script>
 
 </body>
 </html>

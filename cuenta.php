@@ -34,69 +34,38 @@ if ($diferencia->y > 0) {
 } else {
     $tiempo_usuario = "hoy";
 }
+
+$sql_compras = "
+    SELECT 
+        c.id_compra,
+        c.fecha,
+        c.total,
+        GROUP_CONCAT(CONCAT(p.nombre, ' x', dc.cantidad) SEPARATOR '<br>') AS articulos
+    FROM compras c
+    INNER JOIN detalle_compra dc ON c.id_compra = dc.id_compra
+    INNER JOIN productos p ON dc.id_producto = p.id_producto
+    WHERE c.id_usuario = ?
+    GROUP BY c.id_compra, c.fecha, c.total
+    ORDER BY c.fecha DESC
+";
+
+$stmt_compras = $conn->prepare($sql_compras);
+$stmt_compras->bind_param("i", $id_usuario);
+$stmt_compras->execute();
+$compras = $stmt_compras->get_result();
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi cuenta</title>
-    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="css/estilos.css?v=30">
 </head>
 <body>
 
-<header class="header">
-
-    <div class="top-bar">
-
-        <div class="logo">
-            <a href="index.php">Vallery's Archive</a>
-        </div>
-
-        <div class="nav-right">
-
-            <a href="cuenta.php" class="icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5">
-                    <circle cx="12" cy="8" r="4"/>
-                    <path d="M4 20c2-4 6-6 8-6s6 2 8 6"/>
-                </svg>
-            </a>
-
-            <a href="carrito.php" class="icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5">
-                    <circle cx="9" cy="21" r="1"/>
-                    <circle cx="20" cy="21" r="1"/>
-                    <path d="M1 1h4l2.5 12h11l2-8H6"/>
-                </svg>
-            </a>
-
-        </div>
-
-    </div>
-
-    <nav class="menu">
-
-        <div class="menu-left">
-            <a href="index.php">Home</a>
-            <a href="marcas.php">Brands</a>
-            <a href="bags.php">Bags</a>
-            <a href="shoes.php">Shoes</a>
-        </div>
-
-        <div class="menu-right">
-            <div class="search-box">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5">
-                    <circle cx="11" cy="11" r="7"/>
-                    <line x1="16.65" y1="16.65" x2="21" y2="21"/>
-                </svg>
-
-                <input type="text" placeholder="Search">
-            </div>
-        </div>
-
-    </nav>
-
-</header>
+<?php include("header.php"); ?>
 
 <div class="cuenta-contenedor">
 
@@ -120,6 +89,9 @@ if ($diferencia->y > 0) {
     </table>
 
     <a href="logout.php" class="boton-cerrar-sesion">Cerrar sesión</a>
+    <?php if (isset($_SESSION["rol"]) && $_SESSION["rol"] == "admin") { ?>
+    <a href="admin.php" class="boton-admin-cuenta">Ir al panel admin</a>
+    <?php } ?>
 
     <h2>Purchase history</h2>
 
@@ -127,15 +99,41 @@ if ($diferencia->y > 0) {
         <tr>
             <th>Pedido</th>
             <th>Fecha</th>
+            <th>Artículos</th>
             <th>Total</th>
             <th>Estado</th>
         </tr>
-        <tr>
-            <td colspan="4">Aquí aparecerá tu historial de compras cuando realices un pedido.</td>
-        </tr>
+
+        <?php if ($compras->num_rows > 0) { ?>
+            <?php while ($compra = $compras->fetch_assoc()) { ?>
+                <tr>
+                    <td>#<?php echo $compra["id_compra"]; ?></td>
+                    <td><?php echo $compra["fecha"]; ?></td>
+                    <td><?php echo $compra["articulos"]; ?></td>
+                    <td>$<?php echo number_format($compra["total"], 2); ?></td>
+                    <td>Completed</td>
+                </tr>
+            <?php } ?>
+        <?php } else { ?>
+            <tr>
+                <td colspan="5">Aquí aparecerá tu historial de compras cuando realices un pedido.</td>
+            </tr>
+        <?php } ?>
     </table>
 
 </div>
+<?php include("footer.php"); ?>
+
+<script>
+function toggleMenu() {
+    document.getElementById("menuLinks").classList.toggle("activo");
+}
+</script>
+<script>
+function toggleMenu() {
+    document.getElementById("menuLinks").classList.toggle("activo");
+}
+</script>
 
 </body>
 </html>

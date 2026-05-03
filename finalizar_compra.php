@@ -1,7 +1,12 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["id_usuario"]) || empty($_SESSION["carrito"])) {
+if (!isset($_SESSION["id_usuario"])) {
+    header("Location: login.php");
+    exit();
+}
+
+if (empty($_SESSION["carrito"])) {
     header("Location: carrito.php");
     exit();
 }
@@ -26,6 +31,10 @@ while ($producto = $resultado->fetch_assoc()) {
     $id = $producto["id_producto"];
     $cantidad = $carrito[$id];
 
+    if ($cantidad > $producto["stock"]) {
+        die("No hay suficiente stock para " . $producto["nombre"]);
+    }
+
     $subtotal = $producto["precio"] * $cantidad;
     $total += $subtotal;
 
@@ -36,17 +45,13 @@ while ($producto = $resultado->fetch_assoc()) {
 $conn->begin_transaction();
 
 try {
-
-    // 1. insertar compra
     $stmt = $conn->prepare("INSERT INTO compras (id_usuario, total) VALUES (?, ?)");
     $stmt->bind_param("id", $id_usuario, $total);
     $stmt->execute();
 
     $id_compra = $conn->insert_id;
 
-    // 2. detalle + actualizar stock
     foreach ($productos as $producto) {
-
         $stmt = $conn->prepare("INSERT INTO detalle_compra (id_compra, id_producto, cantidad, precio) VALUES (?, ?, ?, ?)");
         $stmt->bind_param(
             "iiid",
@@ -57,7 +62,6 @@ try {
         );
         $stmt->execute();
 
-        // actualizar stock
         $stmt = $conn->prepare("UPDATE productos SET stock = stock - ? WHERE id_producto = ?");
         $stmt->bind_param("ii", $producto["cantidad"], $producto["id_producto"]);
         $stmt->execute();
@@ -65,7 +69,6 @@ try {
 
     $conn->commit();
 
-    // vaciar carrito
     $_SESSION["carrito"] = [];
 
     header("Location: cuenta.php");
