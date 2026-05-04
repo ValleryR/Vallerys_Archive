@@ -7,7 +7,10 @@ if ($conn->connect_error) {
     die("Error de conexión");
 }
 
-$sql = "SELECT * FROM productos ORDER BY RAND() LIMIT 4";
+$sql = "SELECT * FROM productos 
+        WHERE stock > 0 
+        ORDER BY RAND() 
+        LIMIT 4";
 $resultado = $conn->query($sql);
 ?>
 
@@ -17,7 +20,7 @@ $resultado = $conn->query($sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vallery's Archive</title>
-    <link rel="stylesheet" href="css/estilos.css?v=31">
+    <link rel="stylesheet" href="css/estilos.css?v=50">
 </head>
 <body>
 
@@ -28,7 +31,9 @@ $resultado = $conn->query($sql);
     <h1>NEW ARRIVALS</h1>
 
     <?php if (isset($_SESSION["nombre"])) { ?>
-        <p>Hola <?php echo $_SESSION["nombre"]; ?>, nos gusta verte de nuevo!</p>
+        <p class="mensaje-bienvenida">
+            Hola <strong><?php echo $_SESSION["nombre"]; ?></strong>, nos gusta verte de nuevo!
+        </p>
     <?php } ?>
 
     <div class="grid-productos">
@@ -62,33 +67,34 @@ $resultado = $conn->query($sql);
 
     </div>
 
-    <div class="about-section">
+    <section class="about-section">
 
         <h2>ABOUT US</h2>
 
         <p>
-            Vallery’s Archive es un espacio donde se mezcla la peronalidad y la moda.
-            Creo que el estilo debe de ser divertido, classy y un poco serio.
+            Vallery’s Archive es un espacio donde se mezcla la personalidad con la moda.
+            Creo que el estilo debe ser divertido y classy. pero sobre todo auténtico.
         </p>
 
         <p>
-            Este proyecto mezcla Inglés y Español porque un buen fashion style has no rules es expresivo, global y unicamente tuyo!
+            Este proyecto nace de mi forma de ver la moda: sin reglas estrictas, combinando inglés y español porque a good fashion style has no rules. 
+            Es una forma de expresarte, de jugar y de mostrar quién eres sin decir una palabra.
         </p>
 
         <p>
-            Desde iconic bags hasta statement shoes, cada pieza ha sido elegida para elvar tu vibe.
+            Aquí vas a encontrar desde iconic bags hasta statement shoes, piezas pensadas para elevar tu vibe y darle a tu wardrobe ese toque chic que lo hace diferente.
         </p>
 
-    </div>
+        <p>
+            Más que solo moda, Vallery’s Archive es una colección de ideas, inspiración y detalles que reflejan una esencia: confiar en tu estilo y hacerlo tuyo.
+        </p>
+
+    </section>
 
 </div>
+
 <?php include("footer.php"); ?>
 
-<script>
-function toggleMenu() {
-    document.getElementById("menuLinks").classList.toggle("activo");
-}
-</script>
 <script>
 function toggleMenu() {
     document.getElementById("menuLinks").classList.toggle("activo");

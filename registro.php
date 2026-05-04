@@ -74,8 +74,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 </div>
 
-<?php include("footer.php"); ?>
-
 <script>
 function toggleMenu() {
     document.getElementById("menuLinks").classList.toggle("activo");

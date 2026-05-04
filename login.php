@@ -68,7 +68,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ¿No tienes cuenta? <a href="registro.php">Regístrate</a>
     </p>
 </div>
-<?php include("footer.php"); ?>
 
 <script>
 function toggleMenu() {

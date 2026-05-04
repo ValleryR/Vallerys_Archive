@@ -39,7 +39,6 @@ $resultado = $conn->query($sql);
     </div>
 
 </div>
-<?php include("footer.php"); ?>
 
 <script>
 function toggleMenu() {
